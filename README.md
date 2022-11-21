@@ -27,7 +27,7 @@ adapted for JavaScript. This is not a style guide. It's a guide to producing
 [readable, reusable, and refactorable](https://github.com/ryanmcdermott/3rs-of-software-architecture) software in JavaScript.
 
 Robert C. Martin의 저서 [_Clean Code_](https://www.amazon.com/Clean-Code-Handbook-Software-Craftsmanship/dp/0132350882)에서 소프트웨어 엔지니어링 원리를 Javascript에 적용시킨 그림입니다.
-여기서 말하고자 하는 것은 스타일 가이드가 아닙니다. [가독성이 좋고, 재사용 가능하며, 리팩토링이 가능한](https://github.com/ryanmcdermott/3rs-of-software-architecture) Javscript 소프트웨어를 만들기 위한 가이드입니다.
+이 글은 스타일 가이드가 아닙니다. [가독성이 좋고, 재사용 가능하며, 리팩토링이 가능한](https://github.com/ryanmcdermott/3rs-of-software-architecture) Javscript 소프트웨어를 만들기 위한 가이드입니다.
 
 Not every principle herein has to be strictly followed, and even fewer will be
 universally agreed upon. These are guidelines and nothing more, but they are
@@ -257,11 +257,14 @@ function createMicrobrewery(name = "Hipster Brew Co.") {
 ## **Functions**
 
 ### Function arguments (2 or fewer ideally)
+### 함수의 인수 (2개 이하가 바람직)
 
 Limiting the amount of function parameters is incredibly important because it
 makes testing your function easier. Having more than three leads to a
 combinatorial explosion where you have to test tons of different cases with
 each separate argument.
+
+함수 인수의 개수를 제한하는 것은 함수 테스트를 간편하게 만들어 주기 때문에 매우 중요합니다. 인수가 3개 이상이 되면, 서로 다른 인수를 사용한 수많은 경우를 고려해야 해, 조합수가 너무 많아집니다.
 
 One or two arguments is the ideal case, and three should be avoided if possible.
 Anything more than that should be consolidated. Usually, if you have
@@ -269,9 +272,13 @@ more than two arguments then your function is trying to do too much. In cases
 where it's not, most of the time a higher-level object will suffice as an
 argument.
 
+1개 혹은 2개가 적당하며, 3개 이상은 가능하다면 피하도록 합니다. 그 이상인 경우에는 통합할 필요가 있습니다. 만약 인수가 2개 이상이라면, 해당 함수가 너무 많은 역할을 하려 하는걸 수도 있습니다. 그렇지 않은 경우, 대부분 상위 오브젝트를 인수로 하면 충분합니다.
+
 Since JavaScript allows you to make objects on the fly, without a lot of class
 boilerplate, you can use an object if you are finding yourself needing a
 lot of arguments.
+
+Javascript는 class 상용구 플레이트가 많이 없더라도 object를 재빨리 만들 수 있습니다. 따라서 인수가 여러개 필요한 경우 object를 사용할 수 있습니다.
 
 To make it obvious what properties the function expects, you can use the ES2015/ES6
 destructuring syntax. This has a few advantages:
@@ -285,6 +292,13 @@ destructuring syntax. This has a few advantages:
    cloned.
 4. Linters can warn you about unused properties, which would be impossible
    without destructuring.
+
+함수가 어떤 속성을 기대하는지 명확히 하기 위해서 ES2015/ES6의 분할대입 구문을 사용할 수 있습니다. 여기엔 몇 가지 장점이 있습니다:
+
+1. 다른 사람이 함수 정의를 봤을 때, 어떤 속성이 사용되고 있는지 명확합니다.
+2. 이름이 있는 인수 시뮬레이션에 사용할 수 있습니다.
+3. 분할대입은 함수에 넘겨진 인수의 지정된 원시값을 복제합니다. 이는 부작용을 막아줍니다. 주의: 인수 object에서 분할대입된 object와 array는 복제되지 않습니다.
+4. Lint 툴이 사용되지 않은 속성에 대해 경고할 수 있습니다. 이런 경우 분할대입을 사용해야 합니다.
 
 **Bad:**
 
@@ -315,12 +329,15 @@ createMenu({
 **[⬆ back to top](#table-of-contents)**
 
 ### Functions should do one thing
+### 하나의 함수는 한 가지 역할만
 
 This is by far the most important rule in software engineering. When functions
 do more than one thing, they are harder to compose, test, and reason about.
 When you can isolate a function to just one action, it can be refactored
 easily and your code will read much cleaner. If you take nothing else away from
 this guide other than this, you'll be ahead of many developers.
+
+이는 소프트웨어 엔지니어링에 있어 가장 중요한 규칙입니다. 함수가 한 가지 이상의 역할을 한다면, 이를 만들거나 테스트하거나 추리하기 어려워집니다. 하나의 함수가 한 가지 역할만 하도록 하면, 리팩토링이 수월해지고 코드 가독성도 향상시킬 수 있습니다. 만약 여러분이 다른 가이드를 지키지 않더라도, 본 가이드만 지킨다면, 다른 개발자보다 한발 더 앞서있다고 할 수 있습니다.
 
 **Bad:**
 
@@ -351,6 +368,7 @@ function isActiveClient(client) {
 **[⬆ back to top](#table-of-contents)**
 
 ### Function names should say what they do
+### 역할을 알 수 있는 함수 이름을 지을 것
 
 **Bad:**
 
@@ -362,6 +380,7 @@ function addToDate(date, month) {
 const date = new Date();
 
 // It's hard to tell from the function name what is added
+// 함수 이름만 보면 무엇을 추가하는지 알기 어렵습니다.
 addToDate(date, 1);
 ```
 
@@ -379,10 +398,13 @@ addMonthToDate(1, date);
 **[⬆ back to top](#table-of-contents)**
 
 ### Functions should only be one level of abstraction
+### 함수가 한 가지만 추상화하도록 할 것
 
 When you have more than one level of abstraction your function is usually
 doing too much. Splitting up functions leads to reusability and easier
 testing.
+
+함수가 두 가지 이상의 추상을 하고 있다면, 해당 함수가 너무 많은 일을 하고 있을 수 있습니다. 함수를 분리해 재사용성을 향상시키고 테스트를 더 간편하게 할 수 있도록 합니다.
 
 **Bad:**
 
@@ -451,15 +473,20 @@ function parse(tokens) {
 **[⬆ back to top](#table-of-contents)**
 
 ### Remove duplicate code
+### 중복 코드를 없앨 것
 
 Do your absolute best to avoid duplicate code. Duplicate code is bad because it
 means that there's more than one place to alter something if you need to change
 some logic.
 
+최선을 다해 중복 코드를 없앱니다. 중복 코드가 있다는 건 로직을 바꿀 때 여러 군데를 고쳐야 한다는 걸 의미하기 때문에 바람직하지 않습니다.
+
 Imagine if you run a restaurant and you keep track of your inventory: all your
 tomatoes, onions, garlic, spices, etc. If you have multiple lists that
 you keep this on, then all have to be updated when you serve a dish with
 tomatoes in them. If you only have one list, there's only one place to update!
+
+여러분이 식당을 운영하고 있고 토마토나 양파, 마늘, 조미료 등의 재고를 모두 추적하고 있다고 상상해 봅시다. 만약 재고 목록이 여러개 있다면 토마토가 든 요리를 제공할 때마다 모든 목록을 갱신해야 합니다. 목록이 하나만 있다면 하나만 갱신하면 됩니다!
 
 Oftentimes you have duplicate code because you have two or more slightly
 different things, that share a lot in common, but their differences force you
@@ -467,11 +494,15 @@ to have two or more separate functions that do much of the same things. Removing
 duplicate code means creating an abstraction that can handle this set of
 different things with just one function/module/class.
 
+종종 공통점이 많음에도, 조금씩 다른 부분때문에 코드가 중복되는 일이 있습니다. 그러나 이 차이로 인해 비슷한 역할을 하는 함수가 여러개 생기게 됩니다. 중복 코드를 제거한다는 것은 한 가지 함수/모듈/클래스만을 사용해, 이 차이들을 처리할 수 있도록 추상화를 만드는 것을 말합니다.
+
 Getting the abstraction right is critical, that's why you should follow the
 SOLID principles laid out in the _Classes_ section. Bad abstractions can be
 worse than duplicate code, so be careful! Having said this, if you can make
 a good abstraction, do it! Don't repeat yourself, otherwise you'll find yourself
 updating multiple places anytime you want to change one thing.
+
+좋은 추상화는 중요하기 때문에 _Classes_ 섹션에서 설명하는 SOLID 원리를 따라야 합니다. 안 좋은 추상화는 중복 코드보다 더 안 좋을 수 있기에 조심해야 합니다! 쉽지는 않겠지만 만약 좋은 추상화가 가능하다면 도전해 봅시다! 스스로 반복하지 않도록 합니다. 그렇지 않으면 한 가지를 바꿀 때 여러 군데를 바꿔야 합니다.
 
 **Bad:**
 
@@ -537,6 +568,7 @@ function showEmployeeList(employees) {
 **[⬆ back to top](#table-of-contents)**
 
 ### Set default objects with Object.assign
+### Object.assign으로 기본 object를 설정할 것
 
 **Bad:**
 
@@ -590,8 +622,11 @@ createMenu(menuConfig);
 **[⬆ back to top](#table-of-contents)**
 
 ### Don't use flags as function parameters
+### flag를 함수 인자처럼 사용하지 말 것
 
 Flags tell your user that this function does more than one thing. Functions should do one thing. Split out your functions if they are following different code paths based on a boolean.
+
+flag는 함수가 여러 역할을 한다고 유저에게 전합니다. 함수는 한 가지 역할만 해야 합니다. 만약 boolean에 따라 다른 코드 경로를 경유할 경우, 함수를 분리합니다.
 
 **Bad:**
 
