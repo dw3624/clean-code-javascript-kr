@@ -1,4 +1,5 @@
 # clean-code-javascript
+clean code Javascript(한국어)
 
 ## Table of Contents
 
@@ -25,16 +26,23 @@ Software engineering principles, from Robert C. Martin's book
 adapted for JavaScript. This is not a style guide. It's a guide to producing
 [readable, reusable, and refactorable](https://github.com/ryanmcdermott/3rs-of-software-architecture) software in JavaScript.
 
+Robert C. Martin의 저서 [_Clean Code_](https://www.amazon.com/Clean-Code-Handbook-Software-Craftsmanship/dp/0132350882)에서 소프트웨어 엔지니어링 원리를 Javascript에 적용시킨 그림입니다.
+여기서 말하고자 하는 것은 스타일 가이드가 아닙니다. [가독성이 좋고, 재사용 가능하며, 리팩토링이 가능한](https://github.com/ryanmcdermott/3rs-of-software-architecture) Javscript 소프트웨어를 만들기 위한 가이드입니다.
+
 Not every principle herein has to be strictly followed, and even fewer will be
 universally agreed upon. These are guidelines and nothing more, but they are
 ones codified over many years of collective experience by the authors of
 _Clean Code_.
+
+여기 기재된 모든 원리를 엄격하게 따라야 하는건 아닙니다. 보편적으로 합의된 규칙은 더 적습니다. 어디까지나 가이드에 불과하지만, _Clean Code_의 저자들이 오랜 시간동안 쌓아온 경험을 정리한 글입니다.
 
 Our craft of software engineering is just a bit over 50 years old, and we are
 still learning a lot. When software architecture is as old as architecture
 itself, maybe then we will have harder rules to follow. For now, let these
 guidelines serve as a touchstone by which to assess the quality of the
 JavaScript code that you and your team produce.
+
+소프트웨어 엔지니어링 기술은 이제 막 50살이 넘었고, 우리는 아직 많은 것을 배워가고 있습니다. 만약 소프트웨어 아키텍처가 아키텍처 자체만큼이나 오래됐다면, 우리는 아마 더 엄격한 규칙을 따라야 했을 것입니다. 지금으로서는, 본 가이드라인이 여러분과 여러분의 팀이 작성한 Javascript 코드 품질을 평가하기 위한 하나의 기준이 될 것입니다.
 
 One more thing: knowing these won't immediately make you a better software
 developer, and working with them for many years doesn't mean you won't make
@@ -43,9 +51,12 @@ shaped into its final form. Finally, we chisel away the imperfections when
 we review it with our peers. Don't beat yourself up for first drafts that need
 improvement. Beat up the code instead!
 
+한 가지 더: 여기에 있는 내용을 안다고 바로 더 나은 개발자가 되는 것은 아닙니다. 또한 오랫동안 본 규칙들을 따른다고 해서 실수를 하지 않는다는 것도 아닙니다. 모든 코드 조각은 젖은 점토를 원하는 모양으로 만들어나가는 것처럼 초안으로써 시작합니다. 이후 동료들과 리뷰를 하면서 불완전한 부분을 깎아냅니다. 개선이 필요한 초안 단계에서 너무 자신을 괴롭히지 마세요. 대신 코드를 괴롭힙시다!
+
 ## **Variables**
 
 ### Use meaningful and pronounceable variable names
+### 의미가 있고 발음할 수 있는 변수명을 사용할 것
 
 **Bad:**
 
@@ -62,6 +73,7 @@ const currentDate = moment().format("YYYY/MM/DD");
 **[⬆ back to top](#table-of-contents)**
 
 ### Use the same vocabulary for the same type of variable
+### 같은 종류의 변수에는 같은 단어를 사용할 것
 
 **Bad:**
 
@@ -80,6 +92,7 @@ getUser();
 **[⬆ back to top](#table-of-contents)**
 
 ### Use searchable names
+### 검색할 수 있는 이름을 사용할 것
 
 We will read more code than we will ever write. It's important that the code we
 do write is readable and searchable. By _not_ naming variables that end up
@@ -88,6 +101,9 @@ Make your names searchable. Tools like
 [buddy.js](https://github.com/danielstjules/buddy.js) and
 [ESLint](https://github.com/eslint/eslint/blob/660e0918933e6e7fede26bc675a0763a6b357c94/docs/rules/no-magic-numbers.md)
 can help identify unnamed constants.
+
+코드를 작성하기보다 읽는 일이 훨씬 많습니다. 따라서 읽을 수 있고 검색할 수 있는 코드를 작성하는 것은 매우 중요합니다. 프로그램 이해에 도움이 안 되는 변수명은 읽는이를 괴롭히게 됩니다. 검색가능한 변수명을 사용하도록 합니다. [buddy.js](https://github.com/danielstjules/buddy.js)와
+[ESLint](https://github.com/eslint/eslint/blob/660e0918933e6e7fede26bc675a0763a6b357c94/docs/rules/no-magic-numbers.md)와 같은 도구들은 이름이 없는 변수 식별을 수월하게 해줍니다.
 
 **Bad:**
 
@@ -108,6 +124,7 @@ setTimeout(blastOff, MILLISECONDS_PER_DAY);
 **[⬆ back to top](#table-of-contents)**
 
 ### Use explanatory variables
+### 설명적인 변수를 사용할 것
 
 **Bad:**
 
@@ -132,8 +149,12 @@ saveCityZipCode(city, zipCode);
 **[⬆ back to top](#table-of-contents)**
 
 ### Avoid Mental Mapping
+### 멘탈맵핑을 피할 것
 
 Explicit is better than implicit.
+암묵적인 것보다 명시적인 것이 낫습니다.
+
+> 멘탈맵핑(심상 지도): 개인의 ‘공간에 대한 인지 상태’를 자유롭게 표현한 지도. 실제 측량에 의해 제작된 지도와는 달리 각자의 경험과 판단, 지적 수준 등에 의해 결정된 ‘지역의 이미지’.
 
 **Bad:**
 
@@ -167,9 +188,12 @@ locations.forEach(location => {
 **[⬆ back to top](#table-of-contents)**
 
 ### Don't add unneeded context
+### 불필요한 컨텍스트를 추가하지 않을 것
 
 If your class/object name tells you something, don't repeat that in your
 variable name.
+
+만약 class/object명이 정보를 전달하고 있다면, 변수명으로 이를 반복하지 않습니다.
 
 **Bad:**
 
@@ -202,11 +226,14 @@ function paintCar(car, color) {
 **[⬆ back to top](#table-of-contents)**
 
 ### Use default parameters instead of short circuiting or conditionals
+### 단축평가, 조건 대신 기본 파라미터값을 사용할 것
 
 Default parameters are often cleaner than short circuiting. Be aware that if you
 use them, your function will only provide default values for `undefined`
 arguments. Other "falsy" values such as `''`, `""`, `false`, `null`, `0`, and
 `NaN`, will not be replaced by a default value.
+
+기본 파라미터값은 대체로 단축평가보다 간결합니다. 이를 사용할 때, 함수는 `undefined` 인수에 대해서만 기본값을 제공합니다. 기타 `''`, `""`, `false`, `null`, `0`, `NaN` 등의 "falsy" 값은 기본값으로 대체되지 않습니다.
 
 **Bad:**
 
@@ -643,16 +670,16 @@ console.log(newName); // ['Ryan', 'McDermott'];
 
 ### Avoid Side Effects (part 2)
 
-In JavaScript, some values are unchangeable (immutable) and some are changeable 
-(mutable). Objects and arrays are two kinds of mutable values so it's important 
-to handle them carefully when they're passed as parameters to a function. A 
-JavaScript function can change an object's properties or alter the contents of 
+In JavaScript, some values are unchangeable (immutable) and some are changeable
+(mutable). Objects and arrays are two kinds of mutable values so it's important
+to handle them carefully when they're passed as parameters to a function. A
+JavaScript function can change an object's properties or alter the contents of
 an array which could easily cause bugs elsewhere.
 
-Suppose there's a function that accepts an array parameter representing a 
-shopping cart. If the function makes a change in that shopping cart array - 
-by adding an item to purchase, for example - then any other function that 
-uses that same `cart` array will be affected by this addition. That may be 
+Suppose there's a function that accepts an array parameter representing a
+shopping cart. If the function makes a change in that shopping cart array -
+by adding an item to purchase, for example - then any other function that
+uses that same `cart` array will be affected by this addition. That may be
 great, however it could also be bad. Let's imagine a bad situation:
 
 The user clicks the "Purchase" button which calls a `purchase` function that
@@ -663,7 +690,7 @@ button on an item they don't actually want before the network request begins?
 If that happens and the network request begins, then that purchase function
 will send the accidentally added item because the `cart` array was modified.
 
-A great solution would be for the `addItemToCart` function to always clone the 
+A great solution would be for the `addItemToCart` function to always clone the
 `cart`, edit it, and return the clone. This would ensure that functions that are still
 using the old shopping cart wouldn't be affected by the changes.
 
