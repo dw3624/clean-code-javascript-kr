@@ -655,21 +655,28 @@ function createTempFile(name) {
 **[⬆ back to top](#table-of-contents)**
 
 ### Avoid Side Effects (part 1)
+### 부작용을 피할 것 (part 1)
 
 A function produces a side effect if it does anything other than take a value in
 and return another value or values. A side effect could be writing to a file,
 modifying some global variable, or accidentally wiring all your money to a
 stranger.
 
+함수는, 값을 받아 다른 값을 반환하는 것 외의 일을 할 때, 부작용을 일으킵니다. 여기서 부작용이란, 파일에 내용을 작성한다던지, 글로벌 변수를 덮어쓴다던지, 혹은 여러분의 계좌에서 모르는 사람에게 말못 송금한다던지 하는 것들이라 할 수 있습니다.
+
 Now, you do need to have side effects in a program on occasion. Like the previous
 example, you might need to write to a file. What you want to do is to
 centralize where you are doing this. Don't have several functions and classes
 that write to a particular file. Have one service that does it. One and only one.
 
+앞선 예시처럼 파일에 내용을 작성해야 할 때 등, 종종 부족용이 있는 프로그램이 필요하기도 합니다. 이 때 여러분이 하고 싶은 일은 어디서 이 동작을 할지 집중시키는 일입니다. 파일 내용을 작성하는 함수와 class를 여러개 만들지 않도록 합니다. 해당 동작을 하는 서비스는 오직 하나만, 단 하나만 만들도록 합니다.
+
 The main point is to avoid common pitfalls like sharing state between objects
 without any structure, using mutable data types that can be written to by anything,
 and not centralizing where your side effects occur. If you can do this, you will
 be happier than the vast majority of other programmers.
+
+아무 구조 없이 object 간 상태를 공유하거나, 뭐든 작성할 수 있는 가변 데이터 타입을 사용하거나, 혹은 부작용이 여러곳에서 일어나도록 한다거나 하는 등의 흔한 실수를 하지 않는 것이 핵심입니다. 만약 이를 잘 지킨다면, 여러분은 다른 많은 프로그래머들보다 행복할 수 있습니다.
 
 **Bad:**
 
@@ -704,6 +711,7 @@ console.log(newName); // ['Ryan', 'McDermott'];
 **[⬆ back to top](#table-of-contents)**
 
 ### Avoid Side Effects (part 2)
+### 부작용을 피할 것 (part 2)
 
 In JavaScript, some values are unchangeable (immutable) and some are changeable
 (mutable). Objects and arrays are two kinds of mutable values so it's important
