@@ -719,11 +719,15 @@ to handle them carefully when they're passed as parameters to a function. A
 JavaScript function can change an object's properties or alter the contents of
 an array which could easily cause bugs elsewhere.
 
+Javascript에는 불변성을 지닌 값과 가변성을 지닌 값이 있습니다. object와 array는 가변성을 지닌 값들로, 이들을 함수 인수로 넘길 때는 주의깊게 다뤄야 합니다. Javascript 함수는 object의 특성을 바꾸거나 array의 내용을 바꿀 수 있으며, 이는 버그를 유발하기도 합니다.
+
 Suppose there's a function that accepts an array parameter representing a
 shopping cart. If the function makes a change in that shopping cart array -
 by adding an item to purchase, for example - then any other function that
 uses that same `cart` array will be affected by this addition. That may be
 great, however it could also be bad. Let's imagine a bad situation:
+
+쇼핑카트를 나타내는 array를 인수로 받는 함수를 가정해봅니다. 만약 어떤 함수가 이 쇼핑카트 array를 변경하면 - 예를 들어 구매할 물건을 추가한다던지 - 같은 `cart` array를 참조하는 다른 함수들도 그 영향을 받습니다. 이건 굉장해 보이지만 문제가 될 수도 있습니다. 안 좋은 경우을 상상해 봅시다:
 
 The user clicks the "Purchase" button which calls a `purchase` function that
 spawns a network request and sends the `cart` array to the server. Because
@@ -733,9 +737,13 @@ button on an item they don't actually want before the network request begins?
 If that happens and the network request begins, then that purchase function
 will send the accidentally added item because the `cart` array was modified.
 
+한 유저가 "구매" 버튼을 클릭해, 네트워크 요청을 발생시키고 `cart` array를 서버로 보내는 `purchase` 함수를 실행합니다. 네트워크에 문제가 생겨, `purchase` 함수는 요청을 다시 보냅니다. 이때 만약 네트워크 요청이 시작하기 전에 유저가 실수로 "카트에 추가" 버튼을 눌러 원하지 않는 물건을 추가했다면 무슨 일이 일어날까요? 이 때 네트워크 요청이 시작되면, `cart` array가 변경됐기 때문에, 구매 함수는 잘못 추가한 물건도 같이 송신합니다.
+
 A great solution would be for the `addItemToCart` function to always clone the
 `cart`, edit it, and return the clone. This would ensure that functions that are still
 using the old shopping cart wouldn't be affected by the changes.
+
+좋은 해법으로는 `addItemToCart` 함수로 하여금 항상 `cart`를 복사하도록 하고, 이름 편집 및 반환하도록 하는 방법이 있습니다. 이를 통해 기존 cart를 참조하는 함수가 변경에 영향을 받지 않도록 할 수 있습니다.
 
 Two caveats to mention to this approach:
 
@@ -748,6 +756,11 @@ Two caveats to mention to this approach:
    [great libraries](https://facebook.github.io/immutable-js/) that allow
    this kind of programming approach to be fast and not as memory intensive as
    it would be for you to manually clone objects and arrays.
+
+본 접근법 관련 2가지 주의점:
+
+1. 입력된 object값을 변경하고 싶은 경우가 있을 수 있습니다. 본 프로그래밍 기법을 사용하고 있는 경우 이런 경우는 매우 드물다는 것을 알 수 있습니다. 또한 리팩토링을 통해 부작용을 대부분 없앨 수 있습니다!
+2. 방대한 object를 복사하는 일은 퍼포먼스적으로 부담이 되기도 합니다. 그러나 다행히도 본 기법에 있어서는 이는 큰 문제가 되지 않습니다. 왜냐하면, 이와 같은 프로그래밍적 접근을 더욱 신속하게 해주고, 일일이 object와 array를 복사하는 것보다 메모리 사용량을 줄일 수 있는 [훌륭한 라이브러리](https://facebook.github.io/immutable-js/)가 있기 때문입니다.
 
 **Bad:**
 
@@ -768,6 +781,7 @@ const addItemToCart = (cart, item) => {
 **[⬆ back to top](#table-of-contents)**
 
 ### Don't write to global functions
+### 글로벌 함수에 기입하지 말 것
 
 Polluting globals is a bad practice in JavaScript because you could clash with another
 library and the user of your API would be none-the-wiser until they get an
@@ -778,6 +792,8 @@ to the `Array.prototype`, but it could clash with another library that tried
 to do the same thing. What if that other library was just using `diff` to find
 the difference between the first and last elements of an array? This is why it
 would be much better to just use ES2015/ES6 classes and simply extend the `Array` global.
+
+글로벌 환경을 오염하는 것은 Javascript에서는 나쁜 습관입니다. 다른 라이브러리와 충돌을 일으킬 수 있고 여러분의 API 사용자는 배포 환경에서 예외상황을 만나기 전까지 이에 대해 아무것도 모르기 때문입니다. 예시를 하나 생각해봅시다: 만약 여러분이 Javascript의 기존  array 함수를 확장해, 두 array 간 차이를 보여주는 `diff` 함수를 만들고 싶다면 어떻게 해야 할까요? 새 함수를 `Array.prototype`에 추가할 수도 있지만, 같은 일을 하는 다른 라이브러리와 충돌할 수도 있습니다. 만약 다른 라이브러리가 `diff`를 array의 첫번째 요소와 마지막 인자의 차이를 찾는데 사용하고 있다면 어떻게 될까요? 이것이 글로벌 `Array`를 확장하기보다 ES2015/ES6의 class를 사용하는게 나은 이유입니다.
 
 **Bad:**
 
@@ -802,10 +818,13 @@ class SuperArray extends Array {
 **[⬆ back to top](#table-of-contents)**
 
 ### Favor functional programming over imperative programming
+### 명령형 프로그래밍보다 함수형 프로그래밍을 우선할 것
 
 JavaScript isn't a functional language in the way that Haskell is, but it has
 a functional flavor to it. Functional languages can be cleaner and easier to test.
 Favor this style of programming when you can.
+
+Javascript는 Haskell과 같은 함수형 언어는 아니지만 부분적으로 그 기능을 가집니다. 함수형 언어는 더 명확하고 테스트하기 좋습니다. 가능하다면 이런 방식으로 프로그래밍하는게 바람직합니다.
 
 **Bad:**
 
@@ -867,6 +886,7 @@ const totalOutput = programmerOutput.reduce(
 **[⬆ back to top](#table-of-contents)**
 
 ### Encapsulate conditionals
+### 조건을 캡슐화할 것
 
 **Bad:**
 
@@ -891,6 +911,7 @@ if (shouldShowSpinner(fsmInstance, listNodeInstance)) {
 **[⬆ back to top](#table-of-contents)**
 
 ### Avoid negative conditionals
+### 부정적 조건을 피할 것
 
 **Bad:**
 
@@ -919,6 +940,7 @@ if (isDOMNodePresent(node)) {
 **[⬆ back to top](#table-of-contents)**
 
 ### Avoid conditionals
+### 조건문을 피할 것
 
 This seems like an impossible task. Upon first hearing this, most people say,
 "how am I supposed to do anything without an `if` statement?" The answer is that
@@ -928,6 +950,8 @@ answer is a previous clean code concept we learned: a function should only do
 one thing. When you have classes and functions that have `if` statements, you
 are telling your user that your function does more than one thing. Remember,
 just do one thing.
+
+언뜻 봤을 때 본 항목은 불가능해 보입니다. 이걸 처음 들었을 때 대부분 이렇게 말합니다. "`if`문 없이 뭘 어떻게 해?" 여기에 대한 대답은, 대부분의 경우, 다형성(polymorphism)을 이용하면 같은 일을 할 수 있다는 것입니다. 두 번째 질문은 대체로 이렇습니다. "그건 굉장하지만 왜 그래야 하죠...?" 만약 여러분이 `if`문이 있는 class와 함수를 만들었다면, 여러분의 함수가 한 가지 이상의 일을 하고 있다는 것입니다. 하나의 함수는 한 가지 일만, 잊지마세요.
 
 **Bad:**
 
