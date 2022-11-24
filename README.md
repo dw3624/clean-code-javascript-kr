@@ -1003,11 +1003,14 @@ class Cessna extends Airplane {
 **[⬆ back to top](#table-of-contents)**
 
 ### Avoid type-checking (part 1)
+### 타입 검사를 피할 것 (part 1)
 
 JavaScript is untyped, which means your functions can take any type of argument.
 Sometimes you are bitten by this freedom and it becomes tempting to do
 type-checking in your functions. There are many ways to avoid having to do this.
 The first thing to consider is consistent APIs.
+
+Javascript는 타입이 없습니다. 즉 함수 인수로 모든 타입을 넘길 수 있습니다. 이러한 자유로움으로 인해 함수 안에서 타입 검사를 하고자 하는 유혹에 종종 빠지곤 합니다. 이를 피하는 방법은 많습니다. 첫 번째로 일관성 있는 API입니다.
 
 **Bad:**
 
@@ -1032,6 +1035,7 @@ function travelToTexas(vehicle) {
 **[⬆ back to top](#table-of-contents)**
 
 ### Avoid type-checking (part 2)
+### 타입 검사를 피할 것 (part 2)
 
 If you are working with basic primitive values like strings and integers,
 and you can't use polymorphism but you still feel the need to type-check,
@@ -1042,6 +1046,10 @@ doing it well requires so much extra verbiage that the faux "type-safety" you ge
 doesn't make up for the lost readability. Keep your JavaScript clean, write
 good tests, and have good code reviews. Otherwise, do all of that but with
 TypeScript (which, like I said, is a great alternative!).
+
+만약 당신이 문자열, 숫자 등 기본적인 원시값을 다루고 있고, 다형성을 사용할 수 없으나 타입 검사가 필요한 경우, Typescript 사용을 고려해볼 수 있습니다. Typescript는 정적 타이핑 기능을 표준 Javascript에 제공하기 때문에 Javascript의 훌륭한 대체제라 할 수 있습니다.
+
+직접 Javascript 타입 검사를 하는 것의 문제는 너무 많은 구문이 추가로 필요하단 것입니다. 그리고 이를 통해 얻은 가짜 "타입 안전성"은 가독성을 떨어트립니다.
 
 **Bad:**
 
