@@ -1047,9 +1047,7 @@ doesn't make up for the lost readability. Keep your JavaScript clean, write
 good tests, and have good code reviews. Otherwise, do all of that but with
 TypeScript (which, like I said, is a great alternative!).
 
-만약 당신이 문자열, 숫자 등 기본적인 원시값을 다루고 있고, 다형성을 사용할 수 없으나 타입 검사가 필요한 경우, Typescript 사용을 고려해볼 수 있습니다. Typescript는 정적 타이핑 기능을 표준 Javascript에 제공하기 때문에 Javascript의 훌륭한 대체제라 할 수 있습니다.
-
-직접 Javascript 타입 검사를 하는 것의 문제는 너무 많은 구문이 추가로 필요하단 것입니다. 그리고 이를 통해 얻은 가짜 "타입 안전성"은 가독성을 떨어트립니다.
+만약 당신이 문자열, 숫자 등 기본적인 원시값을 다루고 있고, 다형성을 사용할 수 없으나 타입 검사가 필요한 경우, Typescript 사용을 고려해볼 수 있습니다. Typescript는 정적 타이핑 기능을 표준 Javascript에 제공하기 때문에 Javascript의 훌륭한 대체제라 할 수 있습니다. 직접 Javascript 타입 검사를 하는 것의 문제는 너무 많은 구문이 추가로 필요하단 것입니다. 그리고 이를 통해 얻은 가짜 "타입 안전성"은 가독성을 떨어트립니다. 여러분의 Javascript를 깔끔하게 유지하고, 좋은 테스트 코드를 작성하고 좋은 코드 리뷰를 합시다. 그렇지 않다면 Typescript를 사용합니다(제가 말했던 것 처럼 좋은 대안이 될 겁니다!).
 
 **Bad:**
 
