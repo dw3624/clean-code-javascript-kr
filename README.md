@@ -1075,6 +1075,7 @@ function combine(val1, val2) {
 **[⬆ back to top](#table-of-contents)**
 
 ### Don't over-optimize
+### 과도한 최적화를 피할 것
 
 Modern browsers do a lot of optimization under-the-hood at runtime. A lot of
 times, if you are optimizing then you are just wasting your time. [There are good
@@ -1082,11 +1083,15 @@ resources](https://github.com/petkaantonov/bluebird/wiki/Optimization-killers)
 for seeing where optimization is lacking. Target those in the meantime, until
 they are fixed if they can be.
 
+모던 브라우저는 런타임 안에서 많은 최적화를 합니다. 만약 최적화를 많이 반복하고 있다면, 이는 시간 낭비입니다. 여기에 어디 최적화가 부족한지 알아볼 [좋은 리소스](https://github.com/petkaantonov/bluebird/wiki/Optimization-killers)가 있습니다. 이들이 수정되기 전까지는 이들만 최적화 대상으로 보도록 합니다.
+
 **Bad:**
 
 ```javascript
 // On old browsers, each iteration with uncached `list.length` would be costly
 // because of `list.length` recomputation. In modern browsers, this is optimized.
+// 예전 브라우저에서는 캐시되지않은 'list.length'는 재계산으로 인해 cost가 요구됩니다.
+// 모던 브라우저에서는 최적화돼 있습니다.
 for (let i = 0, len = list.length; i < len; i++) {
   // ...
 }
@@ -1103,10 +1108,13 @@ for (let i = 0; i < list.length; i++) {
 **[⬆ back to top](#table-of-contents)**
 
 ### Remove dead code
+### 안 쓰는 코드를 삭제할 것
 
 Dead code is just as bad as duplicate code. There's no reason to keep it in
 your codebase. If it's not being called, get rid of it! It will still be safe
 in your version history if you still need it.
+
+안 쓰는 코드는 중복 코드만큼 나쁩니다. 굳이 이들을 여러분의 코드베이스에 남겨둘 이유가 없습니다. 만약 이들을 호출하지 않는다면, 삭제하십시오! 만약 아직 필요하다고 해도 버전 관리 이력에 안전하게 남아있을 겁니다.
 
 **Bad:**
 
@@ -1137,8 +1145,10 @@ inventoryTracker("apples", req, "www.inventory-awesome.io");
 **[⬆ back to top](#table-of-contents)**
 
 ## **Objects and Data Structures**
+## 오브젝트와 데이터 구조
 
 ### Use getters and setters
+### getters와 setters를 사용할 것
 
 Using getters and setters to access data on objects could be better than simply
 looking for a property on an object. "Why?" you might ask. Well, here's an
@@ -1151,6 +1161,14 @@ unorganized list of reasons why:
 - Easy to add logging and error handling when getting and setting.
 - You can lazy load your object's properties, let's say getting it from a
   server.
+
+단순히 object의 property를 보기보다 getters와 setters를 사용해 object상의 data에 접근하는게 더 좋을 수 있습니다. "왜?" 궁금할 겁니다. 아래 목록에 그 이유를 정리했습니다:
+
+- object propert를 얻는 것 뿐만 아닌 더 많은 일을 하려할 때 코드베이스 내 모든 accessor를 찾을 필요가 없습니다.
+- `set`을 사용할 때 validation 추가가 간편합니다.
+- 내부를 캡슐화합니다.
+- getting, setting을 할 때 로깅과 에러 핸들링 추가가 간편합니다.
+- sever에서 가져오는 object property의 lazy load가 가능합니다.
 
 **Bad:**
 
@@ -1200,8 +1218,11 @@ account.setBalance(100);
 **[⬆ back to top](#table-of-contents)**
 
 ### Make objects have private members
+### object는 private member를 갖게 할 것
 
 This can be accomplished through closures (for ES5 and below).
+
+이를 위해 클로저를 사용할 수 있습니다 (ES5 이전의 경우).
 
 **Bad:**
 
