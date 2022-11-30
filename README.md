@@ -1145,7 +1145,6 @@ inventoryTracker("apples", req, "www.inventory-awesome.io");
 **[⬆ back to top](#table-of-contents)**
 
 ## **Objects and Data Structures**
-## 오브젝트와 데이터 구조
 
 ### Use getters and setters
 ### getters와 setters를 사용할 것
@@ -1263,11 +1262,13 @@ console.log(`Employee name: ${employee.getName()}`); // Employee name: John Doe
 ## **Classes**
 
 ### Prefer ES2015/ES6 classes over ES5 plain functions
+### ES5 함수보다 ES2015/ES6 class를 우선할 것
 
 It's very difficult to get readable class inheritance, construction, and method
 definitions for classical ES5 classes. If you need inheritance (and be aware
-that you might not), then prefer ES2015/ES6 classes. However, prefer small functions over
-classes until you find yourself needing larger and more complex objects.
+that you might not), then prefer ES2015/ES6 classes. However, prefer small functions over classes until you find yourself needing larger and more complex objects.
+
+기존의 ES5 class에서는 가독성이 좋은 class 계승, 구축, 메소드 정의를 하기가 매우 어렵습니다. 계승이 필요한 경우(그렇지 않다 하더라도), ES2015/ES6 class를 우선하도록 합니다. 단, 크고 복잡한 object의 필요성을 느끼기 전에는 class보다 작은 함수 단위를 우선하도록 합니다.
 
 **Bad:**
 
@@ -1348,12 +1349,15 @@ class Human extends Mammal {
 **[⬆ back to top](#table-of-contents)**
 
 ### Use method chaining
+### 메소드 체인을 사용할 것
 
 This pattern is very useful in JavaScript and you see it in many libraries such
 as jQuery and Lodash. It allows your code to be expressive, and less verbose.
 For that reason, I say, use method chaining and take a look at how clean your code
 will be. In your class functions, simply return `this` at the end of every function,
 and you can chain further class methods onto it.
+
+
 
 **Bad:**
 
