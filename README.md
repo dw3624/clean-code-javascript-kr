@@ -1,5 +1,5 @@
 # clean-code-javascript
-clean code Javascript(한국어)
+clean code Javascript (한글)
 
 ## Table of Contents
 
