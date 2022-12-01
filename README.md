@@ -1357,7 +1357,7 @@ For that reason, I say, use method chaining and take a look at how clean your co
 will be. In your class functions, simply return `this` at the end of every function,
 and you can chain further class methods onto it.
 
-
+본 패턴은 Javascript에서 매우 유용한 패턴으로 jQuery나 Lodash 등 많은 라이브러리 내에서 사용됩니다. 이는 여러분의 코드를 알기 쉽고 간결하게 해줍니다. 이에 저는 "메소드 체인을 통해 코드가 얼마나 깔끔해지는지 봐달라"고 말합니다. class 내 모든 함수에 단순히 `this` 반환을 추가해 class의 method를 chain시킬 수 있습니다.
 
 **Bad:**
 
@@ -1432,6 +1432,7 @@ const car = new Car("Ford", "F-150", "red").setColor("pink").save();
 **[⬆ back to top](#table-of-contents)**
 
 ### Prefer composition over inheritance
+### 계승보다 조합을 우선할 것
 
 As stated famously in [_Design Patterns_](https://en.wikipedia.org/wiki/Design_Patterns) by the Gang of Four,
 you should prefer composition over inheritance where you can. There are lots of
@@ -1439,6 +1440,8 @@ good reasons to use inheritance and lots of good reasons to use composition.
 The main point for this maxim is that if your mind instinctively goes for
 inheritance, try to think if composition could model your problem better. In some
 cases it can.
+
+유명한 Gang of Four의 저서 [_Design Patterns_](https://en.wikipedia.org/wiki/Design_Patterns)에 따르면, 가능한 계승보다 조합을 우선해야 합니다. 계승이 좋은 이유도 많고 조합이 좋은 이유도 많이 있습니다. 본 항목의 요점은, 여러분이 본능적으로 계승을 사용하고자 할 때, 조합이 그 문제를 더 잘 모델화할 수 있는지 여부를 고려해 보는 것입니다. 가능한 경우가 종종 있습니다.
 
 You might be wondering then, "when should I use inheritance?" It
 depends on your problem at hand, but this is a decent list of when inheritance
@@ -1449,6 +1452,12 @@ makes more sense than composition:
 2. You can reuse code from the base classes (Humans can move like all animals).
 3. You want to make global changes to derived classes by changing a base class.
    (Change the caloric expenditure of all animals when they move).
+
+"언제 계승을 써야 하지?" 여러분은 궁금해 하실 겁니다. 이는 직면한 상황에 따라 다르겠지만, 다음은 계승이 조합보다 적합한 경우의 목록입니다.
+
+1. 계승이 "has-a" 관계가 아닌 "is-a" 관계를 나타낼 때 (사용자->사용자 상세정보 vs. 사람->동물).
+2. 기본 class의 코드를 다시 사용할 수 있을 때 (사람은 모든 동물처럼 움직일 수 있습니다).
+3. 기본 class를 변경해, 파생 class를 전역적으로 변경하고자 할 때 (모든 동물의 이동 칼로리 소모를 변경).
 
 **Bad:**
 
@@ -1504,6 +1513,7 @@ class Employee {
 ## **SOLID**
 
 ### Single Responsibility Principle (SRP)
+### 단일 책임의 원칙 (SRP)
 
 As stated in Clean Code, "There should never be more than one reason for a class
 to change". It's tempting to jam-pack a class with a lot of functionality, like
@@ -1513,6 +1523,8 @@ to change. Minimizing the amount of times you need to change a class is importan
 It's important because if too much functionality is in one class and you modify
 a piece of it, it can be difficult to understand how that will affect other
 dependent modules in your codebase.
+
+Clean Code에 적혀 있듯이, "class를 변경하기 위한 이유는 1가지를 넘으면 안됩니다". 비행기 여행 때 하나의 짐만 갖고 탈 수 있을 때처럼, 하나의 class에 여러 기능을 넣는 것은 매우 유혹적입니다. 이 때 문제는 해당 class가 개념적으로 일관되지 않고 여러 이유로 인해 바뀔 수 있다는 것입니다. class 변경 횟수를 최소화하는 것은 중요합니다. 왜냐하면 하나의 class에 너무 많은 기능이 포함돼 있고 그 중 일부를 바꿀 경우, 코드베이스 내 다른 의존적 모듈에 어떤 영향을 줄 지 알기 어렵기 때문입니다.
 
 **Bad:**
 
@@ -1564,6 +1576,7 @@ class UserSettings {
 **[⬆ back to top](#table-of-contents)**
 
 ### Open/Closed Principle (OCP)
+### 개방/폐쇄 원칙 (OCP)
 
 As stated by Bertrand Meyer, "software entities (classes, modules, functions,
 etc.) should be open for extension, but closed for modification." What does that
