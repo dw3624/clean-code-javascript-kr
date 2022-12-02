@@ -1,6 +1,8 @@
 # clean-code-javascript
 clean code Javascript (한글)
 
+이 글은 [Clean-Code-JavaScript](ryanmcdermott/clean-code-javascript)를 번역한 글입니다.
+
 ## Table of Contents
 
 1. [Introduction](#introduction)
@@ -1583,6 +1585,8 @@ etc.) should be open for extension, but closed for modification." What does that
 mean though? This principle basically states that you should allow users to
 add new functionalities without changing existing code.
 
+Bertrand Meyer에 의하면, "소프트웨어 개체 (class, 모듈, 함수 등)은 확장에 대해서 열려 있어야 하지만 변경에 대해서는 닫혀 있어야" 합니다. 이게 무슨 말일까요? 이 원칙은 기본적으로, 유저가 기존 코드를 바꾸지 않고도 함수를 새로 만들 수 있도록 해야 한다고 명시합니다.
+
 **Bad:**
 
 ```javascript
@@ -1668,6 +1672,7 @@ class HttpRequester {
 **[⬆ back to top](#table-of-contents)**
 
 ### Liskov Substitution Principle (LSP)
+## 리스코프 치환 원칙 (LSP)
 
 This is a scary term for a very simple concept. It's formally defined as "If S
 is a subtype of T, then objects of type T may be replaced with objects of type S
@@ -1675,12 +1680,16 @@ is a subtype of T, then objects of type T may be replaced with objects of type S
 of the desirable properties of that program (correctness, task performed,
 etc.)." That's an even scarier definition.
 
+이것은 어려운 이름을 가졌지만 매우 간단한 컨셉의 원칙입니다. 기존에 정의된 바에 의하면 "만약 S가 T의 하위형이라면, 프로그램이 갖춰야 할 속성들(정확성, 수행되는 작업 등)을 바꾸지 않더라도, 자료형 T의 객체는 자료형 S의 객체로 교체(치환)될 수 있다"는 내용입니다.
+
 The best explanation for this is if you have a parent class and a child class,
 then the base class and child class can be used interchangeably without getting
 incorrect results. This might still be confusing, so let's take a look at the
 classic Square-Rectangle example. Mathematically, a square is a rectangle, but
 if you model it using the "is-a" relationship via inheritance, you quickly
 get into trouble.
+
+한 가지 예를 들어 설명하자면, 여러분이 부모 클래스와 자식 클래스를 갖고 있을 때 베이스 클래스와 자식 클래스는 잘못된 결과 없이 서로 교환해 사용할 수 있습니다. 여전히 잘 이해가 안된다면, 정사각형-직사각형 예시를 생각해 봅시다. 수학적으로, 정사각형은 직사각형이지만, 만약 여러분이 상속을 통한 "is-a" 관계를 사용해 모델링한다면, 문제가 발생합니다.
 
 **Bad:**
 
