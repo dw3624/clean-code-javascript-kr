@@ -1796,20 +1796,27 @@ renderLargeShapes(shapes);
 **[⬆ back to top](#table-of-contents)**
 
 ### Interface Segregation Principle (ISP)
+### 인터페이스 분리 원칙 (ISP)
 
 JavaScript doesn't have interfaces so this principle doesn't apply as strictly
 as others. However, it's important and relevant even with JavaScript's lack of
 type system.
 
+JavaScript는 인터페이스가 없기 때문에, 이 원칙은 다른 원칙들처럼 엄격하게 적용시킬 순 없습니다. 그러나 JavaScript에 타입 시스템이 없더라도 이는 매우 중요하고 관련이 있습니다.
+
 ISP states that "Clients should not be forced to depend upon interfaces that
 they do not use." Interfaces are implicit contracts in JavaScript because of
 duck typing.
+
+ISP는 "클라이언트는 사용하지 않는 인터페이스에 의존하도록 강요받지 않아야 한다"고 명시합니다. 덕 타이핑 때문에 인터페이스는 JavaScript에서는 그저 암시적인 계약입니다.
 
 A good example to look at that demonstrates this principle in JavaScript is for
 classes that require large settings objects. Not requiring clients to setup
 huge amounts of options is beneficial, because most of the time they won't need
 all of the settings. Making them optional helps prevent having a
 "fat interface".
+
+JavaScript에서 이를 잘 보여주는 좋은 예시는 많은 양의 설정 객체가 필요한 클래스입니다. 클라이언트가 방대한 양의 옵션을 설정하지 않아도 되도록 하는 것이 바랍직합니다. 왜냐하면 많은 경우 설정들이 모두 필요한 건 아니기 때문입니다. 설정을 선택적으로 할 수 있도록 해 "무거운 인터페이스 (fat interface)"를 만드는 것을 피할 수 있습니다.
 
 **Bad:**
 
@@ -1874,6 +1881,7 @@ const $ = new DOMTraverser({
 **[⬆ back to top](#table-of-contents)**
 
 ### Dependency Inversion Principle (DIP)
+### 의존성 역전 원칙 (DIP)
 
 This principle states two essential things:
 
@@ -1881,6 +1889,11 @@ This principle states two essential things:
    depend on abstractions.
 2. Abstractions should not depend upon details. Details should depend on
    abstractions.
+
+이 원칙은 두 가지 중요한 내용을 명시합니다.
+
+1. 상위 모듈은 하위 모듈에 종속되지 않아야 합니다. 둘 다 추상화에 의존해야 합니다.
+2. 추상화는 세부사항에 종속되지 않아야 합니다. 세부사항은 추상화에 따라 달라져야 합니다.
 
 This can be hard to understand at first, but if you've worked with AngularJS,
 you've seen an implementation of this principle in the form of Dependency
@@ -1890,11 +1903,15 @@ It can accomplish this through DI. A huge benefit of this is that it reduces
 the coupling between modules. Coupling is a very bad development pattern because
 it makes your code hard to refactor.
 
+처음에는 이것을 이해하는게 어려울 수 있습니다. 그러나 만약 AngularJS를 써본 적이 있다면 의존성 주입(Dependency Injection) 형태로 이 원리를 구현하는 것을 본 적이 있을 겁니다. DIP는 동일한 개념은 아니지만 상위 모듈이 하위 모듈의 세부사항을 알지 못하도록 합니다. 이는 DI를 통해 구현할 수 있습니다. DI의 장점은 이를 통해 모듈 간 의존성을 감소시킬 수 있다는 데 있습니다. 모듈 간 의존성은 리팩토링을 어렵게 하기 때문에 매우 나쁜 개발 패턴입니다.
+
 As stated previously, JavaScript doesn't have interfaces so the abstractions
 that are depended upon are implicit contracts. That is to say, the methods
 and properties that an object/class exposes to another object/class. In the
 example below, the implicit contract is that any Request module for an
 `InventoryTracker` will have a `requestItems` method.
+
+위에서 말했듯이, JavaScript는 인터페이스를 갖지 않습니다. 따라서 추상화에 의존하는 것은 암시적인 약속입니다. 이말인즉슨, 다른 객체나 클래스에 노출되는 메소드와 속성이 암시적인 약속(추상화)에 해당된다는 것을 말합니다. 아래 예시에서, 암시적 약속은 `InventoryTracker`에 대한 모든 요청 모듈이 `requestItems` 메소드를 가진다는 것을 말합니다.
 
 **Bad:**
 
