@@ -2004,7 +2004,7 @@ you achieve very high confidence and developer peace of mind. This means that
 in addition to having a great testing framework, you also need to use a
 [good coverage tool](https://gotwarlost.github.io/istanbul/).
 
-테스트는 배포보다 더 중요합니다. 
+테스트는 배포보다 더 중요합니다. 충분한 테스트가 없다면, 배포를 할 때 여러분의 코드에 이상이 없는지  확신할 수 없습니다. 얼마나 많은 시간을 투자할지는 여러분이 함께 일하는 팀의 결정에 달렸지만,  Coverage가 100%라는 것은 개발자들에게 높은 자신감과 안도감을 줍니다. 이 말은 훌륭한 테스트 프레임워크 뿐만 아니라 [좋은 Coverage 도구](https://gotwarlost.github.io/istanbul/)를 사용할 필요가 있다는 말입니다.
 
 There's no excuse to not write tests. There are [plenty of good JS test frameworks](https://jstherightway.org/#testing-tools), so find one that your team prefers.
 When you find one that works for your team, then aim to always write tests
@@ -2013,7 +2013,10 @@ Test Driven Development (TDD), that is great, but the main point is to just
 make sure you are reaching your coverage goals before launching any feature,
 or refactoring an existing one.
 
+테스트 코드를 작성하지 않는 것에 대한 변명은 없습니다. [좋은 JS 테스트 프레임워크]((https://jstherightway.org/#testing-tools)가 많기 때문에 이 중에서 팀의 기호에 맞는 것을 고르면 됩니다. 여러분의 팀에 맞는 것을 찾은 뒤에는, 새로 기능/모듈을 도입할 때마다 항상 테스트 코드를 작성하도록 합니다. 만약 테스트 주도 개발 방법론(Test Driven Development, TDD)을 선호한다면 훌륭하지만, 중요한 점은 기능을 배포하거나 기존 기능을 리팩토링하기 전에 Coverage 목표를 달성했는지 확실하게 확인하는 것입니다.
+
 ### Single concept per test
+### 테스트 컨셉
 
 **Bad:**
 
@@ -2068,11 +2071,15 @@ describe("MomentJS", () => {
 **[⬆ back to top](#table-of-contents)**
 
 ## **Concurrency**
+### 동시성
 
 ### Use Promises, not callbacks
+### Callback 대신 Promise를 사용할 것
 
 Callbacks aren't clean, and they cause excessive amounts of nesting. With ES2015/ES6,
 Promises are a built-in global type. Use them!
+
+Callback은 깔끔하지 않습니다. 또한 엄청난 양의 중첩을 만듭니다. ES201/ES6에서는 Promise가 내장돼 있습니다. 이걸 사용합시다!
 
 **Bad:**
 
@@ -2119,12 +2126,15 @@ get("https://en.wikipedia.org/wiki/Robert_Cecil_Martin")
 **[⬆ back to top](#table-of-contents)**
 
 ### Async/Await are even cleaner than Promises
+### Promise보다 더 깔끔한 Async/Await
 
 Promises are a very clean alternative to callbacks, but ES2017/ES8 brings async and await
 which offer an even cleaner solution. All you need is a function that is prefixed
 in an `async` keyword, and then you can write your logic imperatively without
 a `then` chain of functions. Use this if you can take advantage of ES2017/ES8 features
 today!
+
+Promise는 Callback에 비해 매우 깔끔하지만 ES2017/ES8엔더 깔끔한 async와 await가 있습니다. 함수 앞에 `async`를 붙이기만 하면 됩니다. 더이상 함수 연결을 위해 `then`을 쓸 필요가 없습니다. 만약 ES2017/ES8을 사용할 수 있다면 이걸 쓰세요!
 
 **Bad:**
 
@@ -2168,13 +2178,17 @@ getCleanCodeArticle()
 **[⬆ back to top](#table-of-contents)**
 
 ## **Error Handling**
+### 에러 처리 (Error Handling)
 
 Thrown errors are a good thing! They mean the runtime has successfully
 identified when something in your program has gone wrong and it's letting
 you know by stopping function execution on the current stack, killing the
 process (in Node), and notifying you in the console with a stack trace.
 
+에러를 뱉는다는건 좋은겁니다! 프로그램에서 뭔가 잘못됐을 때, 런타임이 이를 성공적으로 확인했다는 걸 의미합니다. 런타임은 현재 스택에서 함수 실행을 중단, (노드에서) 프로세스를 종료한 뒤, 스택 추적으로 콘솔에서  사용자에게 그 이유를 알려줍니다.
+
 ### Don't ignore caught errors
+### 에러를 무시하지지 말 것
 
 Doing nothing with a caught error doesn't give you the ability to ever fix
 or react to said error. Logging the error to the console (`console.log`)
@@ -2182,6 +2196,8 @@ isn't much better as often times it can get lost in a sea of things printed
 to the console. If you wrap any bit of code in a `try/catch` it means you
 think an error may occur there and therefore you should have a plan,
 or create a code path, for when it occurs.
+
+에러를 확인하고도 아무것도 안 한다면, 이를 처리거나 해결할 수 없습니다. `console.log`를 통해 콘솔에 에러를 로깅하는 것은 에러 로그를 잃어버리기 쉬워 좋은 방법이 아닙니다. 만약 `try/catch`로 어떤 코드를 감쌌다면 그건 당신이 그 코드에 대해 에러가 발생할지도 모르기 떄문에 감싼 것이므로, 이에 대해 계획을 마련하거나 코드를 추가해야합니다.
 
 **Bad:**
 
@@ -2210,9 +2226,12 @@ try {
 ```
 
 ### Don't ignore rejected promises
+### Promise 실패를 무시하지 말 것
 
 For the same reason you shouldn't ignore caught errors
 from `try/catch`.
+
+같은 이유로 `try/catch`에서 발생한 에러러도 무시하면 안됩니다.
 
 **Bad:**
 
@@ -2247,6 +2266,7 @@ getdata()
 **[⬆ back to top](#table-of-contents)**
 
 ## **Formatting**
+## 포매팅
 
 Formatting is subjective. Like many rules herein, there is no hard and fast
 rule that you must follow. The main point is DO NOT ARGUE over formatting.
@@ -2257,11 +2277,20 @@ For things that don't fall under the purview of automatic formatting
 (indentation, tabs vs. spaces, double vs. single quotes, etc.) look here
 for some guidance.
 
+포맷팅은 주관적입니다. 여기 있는 많은 규칙들처럼 꼭 따라야 하는 것은 아닙니다. 중요한 점은 포맷팅에 **과하게 집착하지 않는 것**입니다.
+포매팅 체크를 자동으로 해주는 [많은 도구들]((https://standardjs.com/rules.html)이 있기 때문입니다.
+이 중에서 하나를 골라 사용하세요! 엔지니어가 포맷팅에 관해 논쟁하는 것은 시간과 돈의 낭비입니다.
+
+자동 서식 교정이 적용되지 않는 것들(들여쓰기, 탭 vs 스페이스, 큰 vs 작은 따옴표 등)에 관한 몇 가지 지침을 소개해드리겠습니다.
+
 ### Use consistent capitalization
+### 일관된 대소문자를 사용할 것
 
 JavaScript is untyped, so capitalization tells you a lot about your variables,
 functions, etc. These rules are subjective, so your team can choose whatever
 they want. The point is, no matter what you all choose, just be consistent.
+
+JavaScript에는 정해진 타입이 없기 때문에, 대소문자를 구분하는 것으로 당신의 변수나 함수 등에 대해 많은 것을 알 수 있습니다. 이러한 규칙은 주관적인 것이며, 당신의 팀이 자유롭게 결정할 수 있습니다. 중요한 것은 어디까지나 규칙이 일관되도록 하는 것입니다.
 
 **Bad:**
 
@@ -2298,10 +2327,13 @@ class Alpaca {}
 **[⬆ back to top](#table-of-contents)**
 
 ### Function callers and callees should be close
+### 함수호출자와 피호출자는 가까울 것
 
 If a function calls another, keep those functions vertically close in the source
 file. Ideally, keep the caller right above the callee. We tend to read code from
 top-to-bottom, like a newspaper. Because of this, make your code read that way.
+
+어떤 함수가 다른 함수를 호출한다면, 그 함수들이 소스 파일 안안에서 수직으로 근접해 있도록 합니다. 호출 함수를 피호출 함수 바로 위에 두는 것이 이상적입니다. 우리는 코드를 읽을 때 신문처럼 위에서 아래로 읽기 때문에, 코드를 작성할 때도 이를 고려해 작성해야 합니다.
 
 **Bad:**
 
@@ -2386,10 +2418,13 @@ review.perfReview();
 **[⬆ back to top](#table-of-contents)**
 
 ## **Comments**
+## 주석
 
 ### Only comment things that have business logic complexity.
+### 복잡한 비즈니스 로직에만 주석을 작성할 것
 
 Comments are an apology, not a requirement. Good code _mostly_ documents itself.
+주석은 필수 사항이 아니며, 일종의 사과입니다. 좋은 코드는 대체로 그 자체로도 문서 역할을 합합니다.
 
 **Bad:**
 
@@ -2433,8 +2468,10 @@ function hashIt(data) {
 **[⬆ back to top](#table-of-contents)**
 
 ### Don't leave commented out code in your codebase
+### 주석처리된 코드를 지울 것
 
 Version control exists for a reason. Leave old code in your history.
+버전 관리 도구가 히스토리에 코드를 남기기 때문에 주석처리된 코드를 남길 이유가 없습니다.
 
 **Bad:**
 
@@ -2454,9 +2491,11 @@ doStuff();
 **[⬆ back to top](#table-of-contents)**
 
 ### Don't have journal comments
+### 주석으로 기록을 남기지 말 것
 
 Remember, use version control! There's no need for dead code, commented code,
 and especially journal comments. Use `git log` to get history!
+버전 관리 도구를 이용하세요! 죽은 코드, 주석처리된 코드, 그리고 특히 코드에 대한 기록을 남길 필요가 없습니다. 코드 기록을 보고 싶다면 `git log`를 사용하세요!
 
 **Bad:**
 
@@ -2483,9 +2522,12 @@ function combine(a, b) {
 **[⬆ back to top](#table-of-contents)**
 
 ### Avoid positional markers
+### 위치 조절용 주석을 사용하지 말 것
 
 They usually just add noise. Let the functions and variable names along with the
 proper indentation and formatting give the visual structure to your code.
+
+이들은 대부분 코드를 어지럽게 할 뿐입니다. 적절한 들여쓰기와 포매팅을 적용한 함수와 변수명으로 시각적인 구조를 만드세요.
 
 **Bad:**
 
@@ -2522,8 +2564,10 @@ const actions = function() {
 **[⬆ back to top](#table-of-contents)**
 
 ## Translation
+## 번역
 
 This is also available in other languages:
+다른 언어로도 읽을 수 있습니다:
 
 - ![am](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/Armenia.png) **Armenian**: [hanumanum/clean-code-javascript/](https://github.com/hanumanum/clean-code-javascript)
 - ![bd](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/Bangladesh.png) **Bangla(বাংলা)**: [InsomniacSabbir/clean-code-javascript/](https://github.com/InsomniacSabbir/clean-code-javascript/)
